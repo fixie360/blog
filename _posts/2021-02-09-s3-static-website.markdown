@@ -9,11 +9,11 @@ To get the Cloud Resume Challenge started in earnest, today I spun up a really q
 
 I'll work on the actual 'resume content' another time too. First things first, I want to get the infrastructure built then make it flashy later.
 
-So, Using [Bootstap](https://getbootstrap.com/) [CloudFlare](https://www.cloudflare.com/) and [S3](https://s3.console.aws.amazon.com/) I was able to configure a very basic static site in about 45 minutes. Most of that time was spent actually working out why I the template wasn't working properly, out of the box. More on that below.
+Using [Bootstap](https://getbootstrap.com/) [CloudFlare](https://www.cloudflare.com/) and [S3](https://s3.console.aws.amazon.com/) I was able to configure a very basic static site in about 45 minutes. Most of that time was actually spent working out why the template I downloaded wasn't working properly. More on that below.
 
 In terms of what's next, I'll work on getting a JavaScript visitor counter up and running. The challenge requires this counter to store and retrieve the count in a database somewhere. The challenge recommends not making calls into the DB directly, but rather, through a custom API.
 
-I've got another project that makes calls directly into its database, so I'm excited to learn how to create an API and perhaps take what I learned there and improve my other project.
+I've got another project that makes calls directly into its database, so I'm excited to learn how to create an API and perhaps take what I learn there and improve my other project.
 
 Feel free to go ahead and check out [trev.cloud](https://trev.cloud). At the time of writing, it's literally just the Bootstrap Cover template, but if you're reading this in the future, I hope you like my resume!
 
@@ -33,7 +33,7 @@ When you pass an AWS exam they give you a spiffy online badge, [here's mine](htt
 
 >Your resume needs to be styled with CSS. No worries if you’re not a designer – neither am I. It doesn’t have to be fancy. But we need to see something other than raw HTML when we open the webpage.
 
-To speed things up I used a precompiled [example Bootstrap template](https://getbootstrap.com/docs/5.0/getting-started/download/#examples). For this project I chose Cover, a simple single page doc. This should suit me fine. I can edit the HTML and CSS to suit my needs later on.
+To speed things up I used a pre-compiled [example Bootstrap template](https://getbootstrap.com/docs/5.0/getting-started/download/#examples). For this project I chose Cover, a simple single page site. This should suit me fine. I can customise the HTML and CSS to suit my needs later on but for now it's a placeholder.
 
 As mentioned above, most of my time on this part of the project was spent trying to work out why the Cover template wasn't working straight out of the box. I used the Inspector in Chrome and saw there was a console error, unable to find `bootstrap.min.css`.
 
@@ -53,23 +53,22 @@ Spot the difference? There's one less `.` right before `/assets/`.
 
 >Your HTML resume should be deployed online as an Amazon S3 static website. Services like Netlify and GitHub Pages are great and I would normally recommend them for personal static site deployments, but they make things a little too abstract for our purposes here. Use S3.
 
-So to set this blog up I've already used GitHub Pages and following the [AWS doco](https://docs.amazonaws.cn/en_us/AmazonS3/latest/userguide) makes setting up a S3 bucket very easy. The doco is laid out pretty well.
+To set this blog up I've already used GitHub Pages so I definitely wanted to go the S3 route following the requirements of the challenge. I've used S3 buckets as static sites for other projects, so it was good to revisit the setup steps and following the [AWS doco](https://docs.amazonaws.cn/en_us/AmazonS3/latest/userguide) makes setting up easy.
 
-I've used buckets for other projects before too any, so it was good to revisit the setup steps. I did all the setup in the GUI.
-- Create a new bucket named `trev.cloud`. The bucket name is same as my URL because I think it needs to be. As of writing I'm not sure so I erred on the side of caution. Plus, it's good to see buckets named based on their URLs / projects I guess. Makes it easy to single out if you haven't set tags up and such.
+- Create a new bucket named `trev.cloud`. Side note: I'm pretty sure the bucket name has to be the same as my URL. As of writing this, I'm not actually certain but I erred on the side of caution. Plus, it's good to see bucket names based on their URLs / projects - it makes it easy to quickly identify what a bucket is for if you haven't set tags up and such.
 - Open the new bucket and go to properties. Under Static website hosting, choose Edit then Under Static website hosting, choose Enable. Save the changes.
 - In Index document, enter the file name of the index document, in this case `index.html` then choose Save changes.
-- Under Static website hosting, note the Endpoint - `http://trev.cloud.s3-website-ap-southeast-2.amazonaws.com`
+- Under Static website hosting, note the Endpoint, in this case - `http://trev.cloud.s3-website-ap-southeast-2.amazonaws.com`
 
-Once the bucket is enabled for static website hosting, you still can't hit it until you enable permissions.
+Once the bucket is enabled for static website hosting, you still can't hit it until you modify the permissions.
 
 - Choose Permissions. Under Block public access (bucket settings), choose Edit.
 - Clear Block all public access, and choose Save changes.
 
-The final configuration step before adding files is to add a bucket policy to grant public read access for your website.
+The final configuration step before adding files is to add a `Bucket Policy` to grant public read access for your website.
 - Under Bucket Policy, choose Edit.
 
-I used an existing policy I previously set up for another site, making sure I edited the resource field to reflect the name of this site.
+I used an existing policy I had previously set up for another site, making sure I edited the resource field to reflect the name of this site.
 
 {% highlight json %}
 {
@@ -88,7 +87,8 @@ I used an existing policy I previously set up for another site, making sure I ed
 }
 {% endhighlight %}
 
-Now configured to be accessed publicy it was time to upload some files.
+Now configured to be accessed publicly, it was time to upload some files.
+
 - Go into the bucket, over to the Objects tab then chooe Upload.
 - Drag and drop works on the GUI in Chrome so I selected all the files in the project folder and dragged across the into the broswer. Once there I hit Upload.
 
@@ -103,6 +103,7 @@ Well this one was a gimme since I had already configured my domain in [Cloudflar
 >Point a custom DNS domain name to the CloudFront distribution, so your resume can be accessed at something like my-c00l-resume-website.com. You can use Amazon Route 53 or any other DNS provider for this. A domain name usually costs about ten bucks to register.
 
 The final step to make this site easier for the world to find was to configure DNS.
+
 - In Cloudflare I created a new `CNAME` record `trev.cloud` that targets the S3 bucket endpoint `trev.cloud.s3-website-ap-southeast-2.amazonaws.com`.
 
 I confirmed the site was up by navigating to [https://trev.cloud](https://trev.cloud) and seeing the template.
