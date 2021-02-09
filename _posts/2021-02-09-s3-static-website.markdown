@@ -42,7 +42,7 @@ Out of the box, `index.html` comes like this:
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 {% endhighlight %}
 
-But actually, to get it working I to be more like:
+But actually, to get it working it had to be more like this:
 {% highlight html %}
 <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
 {% endhighlight %}
