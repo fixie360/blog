@@ -9,7 +9,7 @@ To get the Cloud Resume Challenge started in earnest, today I spun up a really q
 
 I'll work on the actual 'resume content' another time too. First things first, I want to get the infrastructure built then make it flashy later.
 
-Using [Bootstap](https://getbootstrap.com/) [CloudFlare](https://www.cloudflare.com/) and [S3](https://s3.console.aws.amazon.com/) I was able to configure a very basic static site in about 45 minutes. Most of that time was actually spent working out why the template I downloaded wasn't working properly. More on that below.
+Using [Bootstap](https://getbootstrap.com/), [CloudFlare](https://www.cloudflare.com/) and [S3](https://s3.console.aws.amazon.com/) I was able to configure a very basic static site in about 45 minutes. Most of that time was actually spent working out why the template I downloaded wasn't working properly. More on that below.
 
 In terms of what's next, I'll work on getting a JavaScript visitor counter up and running. The challenge requires this counter to store and retrieve the count in a database somewhere. The challenge recommends not making calls into the DB directly, but rather, through a custom API.
 
